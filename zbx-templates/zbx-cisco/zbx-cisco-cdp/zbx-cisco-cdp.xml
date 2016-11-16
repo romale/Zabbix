@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2012-11-05T13:49:21Z</date>
+    <date>2016-11-16T08:22:18Z</date>
     <groups>
         <group>
             <name>ZBX-CISCO-TEMPLATES</name>
@@ -25,16 +25,19 @@
             <discovery_rules>
                 <discovery_rule>
                     <name>CDP Neighbor</name>
-                    <type>10</type>
-                    <snmp_community/>
-                    <snmp_oid/>
-                    <key>advsnmp.discovery[{HOST.HOST},&quot;-v2c -c{$SNMP_COMMUNITY}&quot;,.1.3.6.1.4.1.9.9.23.1.2.1.1.7,1.8]</key>
-                    <delay>300</delay>
+                    <type>4</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.7</snmp_oid>
+                    <key>cdpCacheDevicePort</key>
+                    <delay>3600</delay>
                     <status>0</status>
                     <allowed_hosts/>
+                    <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
                     <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
                     <delay_flex/>
                     <params/>
@@ -54,8 +57,8 @@
                             <type>4</type>
                             <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
                             <multiplier>0</multiplier>
-                            <snmp_oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.6.{#ADVSNMPINDEX2}</snmp_oid>
-                            <key>ciscoCdpCacheDeviceId[{#ADVSNMPVALUE}]</key>
+                            <snmp_oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.6.{#SNMPINDEX}</snmp_oid>
+                            <key>ciscoCdpCacheDeviceId[{#SNMPVALUE}]</key>
                             <delay>300</delay>
                             <history>7</history>
                             <trends>365</trends>
@@ -64,9 +67,12 @@
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
+                            <snmpv3_contextname/>
                             <snmpv3_securityname/>
                             <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
                             <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
                             <snmpv3_privpassphrase/>
                             <formula>1</formula>
                             <delay_flex/>
@@ -87,14 +93,15 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
                             <name>CDP neighbor platform on interface $1</name>
                             <type>4</type>
                             <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
                             <multiplier>0</multiplier>
-                            <snmp_oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.8.{#ADVSNMPINDEX2}</snmp_oid>
-                            <key>ciscoCdpCachePlatform[{#ADVSNMPVALUE}]</key>
+                            <snmp_oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.8.{#SNMPINDEX}</snmp_oid>
+                            <key>ciscoCdpCachePlatform[{#SNMPVALUE}]</key>
                             <delay>300</delay>
                             <history>7</history>
                             <trends>365</trends>
@@ -103,9 +110,12 @@
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
+                            <snmpv3_contextname/>
                             <snmpv3_securityname/>
                             <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
                             <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
                             <snmpv3_privpassphrase/>
                             <formula>1</formula>
                             <delay_flex/>
@@ -126,12 +136,13 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{ZBX-CISCO-CDP:ciscoCdpCacheDeviceId[{#ADVSNMPVALUE}].diff(0)}&gt;0|{ZBX-CISCO-CDP:ciscoCdpCachePlatform[{#ADVSNMPVALUE}].diff(0)}&gt;0</expression>
-                            <name>CDP neighbor on interface {#ADVSNMPVALUE} was changed</name>
+                            <expression>{ZBX-CISCO-CDP:ciscoCdpCacheDeviceId[{#SNMPVALUE}].diff(0)}&gt;0|{ZBX-CISCO-CDP:ciscoCdpCachePlatform[{#SNMPVALUE}].diff(0)}&gt;0</expression>
+                            <name>CDP neighbor on interface {#SNMPVALUE} was changed</name>
                             <url/>
                             <status>0</status>
                             <priority>1</priority>
@@ -140,6 +151,7 @@
                         </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes/>
+                    <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
             <macros/>
